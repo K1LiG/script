@@ -40,7 +40,7 @@ do
               - $port:3000
             environment:
               - TZ=Asia/Shanghai
-              - SQL_DSN=\"root:feng32633@tcp(root_mysql_1)/oneapi\"
+              - SQL_DSN=\"root:feng32633@tcp(mysql)/oneapi\"
             volumes:
               - /home/ubuntu/data/one-api:/data
           mysql:
