@@ -35,6 +35,7 @@ do
         services:
           one-api:
             image: ghcr.io/martialbe/one-api
+            privileged: true
             restart: always
             ports:
               - $port:3000
