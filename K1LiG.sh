@@ -40,9 +40,17 @@ do
               - $port:3000
             environment:
               - TZ=Asia/Shanghai
-              - SQL_DSN=\"root:123456@tcp(localhost:3306)/oneapi\"
+              - SQL_DSN=\"root:feng32633@tcp(mysql:3306)/oneapi\"
             volumes:
               - /home/ubuntu/data/one-api:/data
+          mysql:
+            image: mysql:5.7
+            restart: always
+            environment:
+              MYSQL_ROOT_PASSWORD: feng32633
+              MYSQL_DATABASE: oneapi
+            volumes:
+              - /home/ubuntu/data/mysql:/var/lib/mysql
         " > docker-compose.yml
         docker-compose up -d
         echo "正在安装和配置 Nginx..."
