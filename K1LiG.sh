@@ -34,12 +34,13 @@ do
         version: '3'
         services:
           one-api:
-            image: justsong/one-api
+            image: ghcr.io/martialbe/one-api
             restart: always
             ports:
               - $port:3000
             environment:
               - TZ=Asia/Shanghai
+              - SQL_DSN=\"root:123456@tcp(localhost:3306)/oneapi\"
             volumes:
               - /home/ubuntu/data/one-api:/data
         " > docker-compose.yml
