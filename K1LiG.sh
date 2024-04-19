@@ -5,7 +5,7 @@ do
     echo "欢迎使用此脚本！请选择一个选项："
     echo "1. 更新软件源并安装组件"
     echo "2. 安装 Docker Compose"
-    echo "3. 备份功能（此功能需要你自己实现）"
+    echo "3. 安装 MySQL"
     echo "4. AI网站搭建"
     echo "5. 更新AI网站"
     echo "6. 退出"
@@ -23,7 +23,8 @@ do
         clear
         ;;
     3)
-        echo "备份功能尚未实现。"
+        echo "正在安装 MySQL..."
+        docker run --name mysql -p 3306:3306 -e MYSQL_ROOT_PASSWORD=feng32633 -d mysql:5.7
         clear
         ;;
     4)
@@ -35,23 +36,16 @@ do
         services:
           one-api:
             image: ghcr.io/martialbe/one-api
-            privileged: true
             restart: always
             ports:
               - $port:3000
             environment:
               - TZ=Asia/Shanghai
-              - SQL_DSN=\"root:feng32633@tcp(mysql)/oneapi\"
+              - SQL_DSN=\"root:feng32633@tcp(mysql:3306)/oneapi\"
             volumes:
               - /home/ubuntu/data/one-api:/data
-          mysql:
-            image: mysql:5.7
-            restart: always
-            environment:
-              MYSQL_ROOT_PASSWORD: feng32633
-              MYSQL_DATABASE: oneapi
-            volumes:
-              - /home/ubuntu/data/mysql:/var/lib/mysql
+            depends_on:
+              - mysql
         " > docker-compose.yml
         docker-compose up -d
         echo "正在安装和配置 Nginx..."
