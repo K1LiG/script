@@ -24,7 +24,8 @@ do
         ;;
     3)
         echo "正在安装 MySQL..."
-        docker run --name mysql -p 3306:3306 -e MYSQL_ROOT_PASSWORD=feng32633 -d mysql:5.7
+        sudo apt-get install mysql-server -y
+        sudo mysql_secure_installation
         clear
         ;;
     4)
@@ -41,11 +42,9 @@ do
               - $port:3000
             environment:
               - TZ=Asia/Shanghai
-              - SQL_DSN=\"root:feng32633@tcp(mysql:3306)/oneapi\"
+              - SQL_DSN=\"root:feng32633@tcp(host.docker.internal:3306)/oneapi\"
             volumes:
               - /home/ubuntu/data/one-api:/data
-            depends_on:
-              - mysql
         " > docker-compose.yml
         docker-compose up -d
         echo "正在安装和配置 Nginx..."
